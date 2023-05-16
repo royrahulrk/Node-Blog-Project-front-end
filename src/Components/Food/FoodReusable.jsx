@@ -1,9 +1,27 @@
-import React,{useContext} from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Food.css";
-import { ContextData } from "../ContextApi/ContextApi";
+import axios from "axios";
 const FoodReusable = () => {
-  const [data] = useContext(ContextData);
+
+  
+  const [data,setData] =useState([])
+ 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('https://nodeblogproject.onrender.com/food');
+      console.log(response.data.details);
+      setData(response.data.details)
+      // Process the response data as needed
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <>
       <div>
@@ -20,8 +38,9 @@ const FoodReusable = () => {
                   className="link"
                   to={`/Food/full`}
                   state={{ data }}
+                  key={i}
                 >
-                  <div className="fchild" key={i}>
+                  <div className="fchild" >
                     <div className="finner">
                       <center>
                         <div className="img">

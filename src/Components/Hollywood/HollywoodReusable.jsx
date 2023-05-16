@@ -1,9 +1,26 @@
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 import "./Hollywood.css";
 import { Link } from "react-router-dom";
-import { ContextData } from "../ContextApi/ContextApi";
+import axios from "axios";
 const HollywoodReusable = () => {
-  const [data] = useContext(ContextData);
+    
+
+  const [data,setData] =useState([])
+ 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('https://nodeblogproject.onrender.com/hollywood');
+      console.log(response.data.details);
+      setData(response.data.details)
+      // Process the response data as needed
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <>
       <div>
@@ -21,8 +38,9 @@ const HollywoodReusable = () => {
                     className="link"
                     to={`/Hollywood/full`}
                     state={{ data }}
+                    key={i}
                   >
-                    <div className="child1" key={i}>
+                    <div className="child1" >
                       <div className="img-left">
                         <img className="himg" src={data.img} alt="404"></img>
                       </div>

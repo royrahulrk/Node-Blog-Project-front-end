@@ -8,7 +8,6 @@ import Hollywood from "./Components/Hollywood"
 import Technology from "./Components/Technology"
 import Home from "./Components/Home"
 import PageNotFound from "./Components/PageNotFound";
-import { ContextApi } from "./Components/ContextApi/ContextApi";
 // fullview
 import BollywoodFullView from "./Components/Bollywood/Bollywood";
 import TechnologyFullView from "./Components/Technology/Technology";
@@ -19,7 +18,7 @@ import FoodFullView from "./Components/Food/Food";
 const App = () => {
   return (
     <>
-      <ContextApi>
+    
 
       <Routes>
         
@@ -37,7 +36,7 @@ const App = () => {
         <Route  path="*" element={<PageNotFound/>}></Route>
       
       </Routes>
-      </ContextApi>
+   
     </>
   );
 };

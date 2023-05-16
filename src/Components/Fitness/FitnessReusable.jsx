@@ -1,9 +1,26 @@
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 import "./Fitness.css";
 import { Link } from "react-router-dom";
-import { ContextData } from "../ContextApi/ContextApi";
+import axios from "axios";
+
 const FitnessReusable = () => {
-  const [data] = useContext(ContextData);
+  
+  const [data,setData] =useState([])
+ 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('https://nodeblogproject.onrender.com/fitness');
+      console.log(response.data.details);
+      setData(response.data.details)
+      // Process the response data as needed
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <>
@@ -17,8 +34,8 @@ const FitnessReusable = () => {
             {data
               .filter((value) => value.category === "fitness")
               .map((data, i) => (
-                <Link className="link" to={`/Fitness/full`} state={{ data }}>
-                  <div className="fchild" key={i}>
+                <Link className="link" to={`/Fitness/full`} state={{ data }} key={i}>
+                  <div className="fchild" >
                     <div className="finner">
                       <center>
                         <div className="img">

@@ -1,9 +1,24 @@
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 import "./Technology.css";
 import { Link } from "react-router-dom";
-import { ContextData } from "../ContextApi/ContextApi";
+import axios from "axios";
 const TechnologyReusable = () => {
-  const [data] = useContext(ContextData);
+  const [data,setData] =useState([])
+ 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('https://nodeblogproject.onrender.com/technology');
+      console.log(response.data.details);
+      setData(response.data.details)
+      // Process the response data as needed
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <>
@@ -17,8 +32,8 @@ const TechnologyReusable = () => {
             {data
               .filter((value) => value.category === "technology")
               .map((data, i) => (
-                <Link className="link" to={`/Technology/full`} state={{ data }}>
-                  <div className="tchild" key={i}>
+                <Link className="link" to={`/Technology/full`} state={{ data }} key={i}>
+                  <div className="tchild" >
                     <div className="inner">
                       <center>
                         <div className="img">

@@ -1,10 +1,27 @@
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 import "./Bollywood.css";
 import { Link } from "react-router-dom";
-import { ContextData } from "../ContextApi/ContextApi";
+import axios from "axios";
+
 
 const BollywoodReusable = () => {
-  const [data] = useContext(ContextData);
+
+  const [data,setData] =useState([])
+ 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('https://nodeblogproject.onrender.com/bollywood');
+      console.log(response.data.details);
+      setData(response.data.details)
+      // Process the response data as needed
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <>
@@ -16,14 +33,14 @@ const BollywoodReusable = () => {
 
         <div className="bollywoodContainer">
           <div className="parent">
-            {data
+            {data && data
               .filter((value) => value.category === "bollywood")
               .map((data, i) => (
-                <Link className="link" to={`/Bollywood/full`} state={{ data }}>
-                  <div className="child" key={i}>
-                    <div className="inner">
-                      <center>
-                        <div className="img">
+                <Link className="link" to={`/Bollywood/full`} state={{ data }} key={i}>
+                  <div className="child" >
+                    <div className="inner" >
+                      <center >
+                        <div className="img" >
                           <img className="bimg" src={data.img} alt="404"></img>
                         </div>
                       </center>
